@@ -1,0 +1,18 @@
+FileVersion = 1
+
+[Workspace]
+StartupProject = "Wasm4.Game"
+
+[Projects]
+"Wasm4.Game" = {Path = "."}
+
+[Configs.Debug.Wasm32]
+PreprocessorMacros = ["BF_CRT_DISABLE"]
+TargetTriple = "wasm32-unknown-unknown"
+BfSIMDSetting = "None"
+BfOptimizationLevel = "Og"
+AllocType = "CRT"
+RuntimeKind = "Disabled"
+ReflectKind = "Minimal"
+EnableObjectDebugFlags = false
+IntermediateType = "ObjectAndIRCode"

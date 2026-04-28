@@ -1,0 +1,12 @@
+blit
+blitSub
+line
+hLine
+vLine
+oval
+rect
+text
+tone
+diskR
+diskW
+trace

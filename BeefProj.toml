@@ -1,0 +1,9 @@
+FileVersion = 1
+
+[Project]
+Name = "Wasm4.Game"
+
+[Configs.Debug.Wasm32]
+PostBuildCmds = ["build.bat"]
+DebugCommand = "w4"
+DebugCommandArguments = "run --hot $(TargetDir)/$(ProjectName).wasm"
