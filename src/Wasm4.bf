@@ -1,7 +1,8 @@
 using System;
-namespace Wasm4Game;
 
-static class Wasm4
+namespace Wasm4;
+
+public static class Wasm4
 {
 	public enum GamepadButton : uint8
 	{

@@ -1,10 +1,11 @@
 FileVersion = 1
 
 [Workspace]
-StartupProject = "Wasm4.Game"
+StartupProject = "Sample"
 
 [Projects]
-"Wasm4.Game" = {Path = "."}
+Wasm4 = {Path = "."}
+Sample = {Path = "Sample"}
 
 [Configs.Debug.Wasm32]
 PreprocessorMacros = ["BF_CRT_DISABLE"]

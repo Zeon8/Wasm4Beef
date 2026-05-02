@@ -2,23 +2,28 @@ using System;
 using System.Threading;
 using System.Collections;
 
-namespace Wasm4Game;
+namespace Wasm4;
 
-public static class Game
+public abstract class Game<T> where T : Game<T>, class, new
 {
+	private static readonly Game<T> _game = new T();
+
 	[Export]
 	[LinkName("start")]
-	public static void Start()
+	private static void StartInternal()
 	{
-		// Call static constructors
 		BeefStart();
-		Wasm4.Trace("Hello!");
+		_game.Start();
 	}
 
 	[Export]
 	[LinkName("update")]
-	public static void Update()
+	private static void UpdateInternal()
 	{
-		Wasm4.Text("Hello world!", 35, 10);
+		_game.Update();
 	}
+
+	protected virtual void Start(){}
+	protected virtual void Update(){}
 }
+

@@ -1,10 +1,11 @@
 using System;
-namespace Wasm4Game;
 
-static
+namespace Wasm4;
+
+internal static
 {
 	[CLink]
-	public static extern void BeefStart();
+	internal static extern void BeefStart();
 
 	[Export]
 	[CLink]
