@@ -36,47 +36,71 @@ public static class Wasm4
 		Rotate = 8
 	}
 
-	public enum ToneChannel : uint32
+	public struct ToneFlags : uint32
 	{
-		Pulse1 = 0,
-		Pulse2 = 1,
-		Triangle = 2,
-		Noise = 3,
+		public enum Channel : uint32
+		{
+			Pulse1 = 0,
+			Pulse2 = 1,
+			Triangle = 2,
+			Noise = 3,
+		}
+
+		public enum Mode : uint32
+		{
+			Mode1 = 0,
+			Mode2 = 4,
+			Mode3 = 8,
+			Mode4 = 12,
+		}
+
+		public enum Pan : uint32
+		{
+			PanLeft = 16,
+			PanRight = 32,
+		}
+
+		public enum OtherFlags : uint32
+		{
+			NoteMode = 64,
+		}
+
+		public this(Channel channel, Mode mode, Pan pan, OtherFlags otherFlags)
+		{
+			this = (uint32)channel | (uint32)mode | (uint32)pan | (uint32)otherFlags;
+		}
 	}
 
-	public enum ToneMode : uint32
+	public enum Color : uint8
 	{
-		Mode1 = 0,
-		Mode2 = 4,
-		Mode3 = 8,
-		Mode4 = 12,
+		Color1,
+		Color2,
+		Color3,
+		Color4,
 	}
 
-	public enum TonePan : uint32
+	public struct DrawColorStruct : uint16
 	{
-		PanLeft = 16,
-		PanRight = 32,
+		public this(Color color, Color secondColor)
+		{
+			this = (uint16)secondColor << 4 | (uint16)color;
+		}
 	}
-
-	public enum ToneFlags : uint32
-	{
-		NoteMode = 64,
-	}
-
+	
 	public const int ScreenSize = 160;
 	public const int FontSize = 8;
 
-	public static readonly uint32* Palette = (uint32*)(void*)0x04;
-	public static readonly uint16* DrawColors = (uint16*)(void*)0x14;
-	public static readonly uint8* Gamepad1 = (uint8*)(void*)0x16;
-	public static readonly uint8* Gamepad2 = (uint8*)(void*)0x17;
-	public static readonly uint8* Gamepad3 = (uint8*)(void*)0x18;
-	public static readonly uint8* Gamepad4 = (uint8*)(void*)0x19;
-	public static readonly int16* MouseX = (int16*)(void*)0x1a;
-	public static readonly int16* MouseY = (int16*)(void*)0x1c;
-	public static readonly uint8* MouseButtons = (uint8*)(void*)0x1e;
-	public static readonly uint8* SystemFlags = (uint8*)(void*)0x1f;
-	public static readonly uint8* Netplay = (uint8*)(void*)0x20;
+	public static readonly uint32* Palette = (.)(void*)0x04;
+	public static readonly DrawColorStruct* DrawColors = (.)(void*)0x14;
+	public static readonly GamepadButton* Gamepad1 = (.)(void*)0x16;
+	public static readonly GamepadButton* Gamepad2 = (.)(void*)0x17;
+	public static readonly GamepadButton* Gamepad3 = (.)(void*)0x18;
+	public static readonly GamepadButton* Gamepad4 = (.)(void*)0x19;
+	public static readonly int16* MouseX = (.)(void*)0x1a;
+	public static readonly int16* MouseY = (.)(void*)0x1c;
+	public static readonly MouseButton* MouseButtons = (.)(void*)0x1e;
+	public static readonly SystemFlags* SystemFlags = (.)(void*)0x1f;
+	public static readonly uint8* Netplay = (.)(void*)0x20;
 	public static readonly uint8* Framebuffer = (uint8*)(void*)0xa0;
 
 	[LinkName("blit")]
@@ -105,7 +129,7 @@ public static class Wasm4
 	public static extern void Text(char8* text, int32 x, int32 y);
 
 	[LinkName("tone")]
-	public static extern void Tone(uint32 frequency, uint32 duration, uint32 volume, uint32 flags);
+	public static extern void Tone(uint32 frequency, uint32 duration, uint32 volume, ToneFlags flags);
 
 	[LinkName("diskr")]
 	public static extern uint32 DiskR(void* dest, uint32 size);
